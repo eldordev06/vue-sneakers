@@ -9,7 +9,9 @@ const isActiveLink = (routePath) => {
 </script>
 
 <template>
-    <div class="flex justify-between container p-11 border-b min-w-full">
+    <div
+        class="flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"
+    >
         <div class="flex items-center">
             <RouterLink to="/">
                 <img
@@ -24,7 +26,28 @@ const isActiveLink = (routePath) => {
                 <p class="text-gray-400 text-sm">Магазин лучших кроссовок</p>
             </div>
         </div>
-        <div class="flex items-center gap-8">
+        <div class="flex flex-wrap justify-center gap-5">
+            <RouterLink
+                to="/"
+                :class="[
+                    'flex',
+                    'items-center',
+                    'gap-2.5',
+                    'text-sm',
+                    'text-gray-400',
+                    'transition',
+                    'duration-200',
+                    'cursor-pointer',
+                    'hover:text-gray-600',
+                    isActiveLink('/') ? 'text-gray-600' : '',
+                ]"
+            >
+                <Icon
+                    icon="prime:home"
+                    class="text-xl"
+                />
+                <span>Главная</span>
+            </RouterLink>
             <RouterLink
                 to="/cart"
                 :class="[
