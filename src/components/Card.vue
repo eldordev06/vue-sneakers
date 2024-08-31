@@ -3,23 +3,29 @@ import { ref } from 'vue';
 
 const props = defineProps({
     isFavorite: Boolean,
+    inCart: Boolean,
 });
 const isFavorite = ref(props.isFavorite);
-function toggleFav() {
+const inCart = ref(props.inCart);
+
+function toggleIsFav() {
     isFavorite.value = !isFavorite.value;
+}
+function toggleInCart() {
+    inCart.value = !inCart.value;
 }
 </script>
 
 <template>
     <div
-        class="pt-5 pb-8 px-[30px] flex flex-col items-center rounded-3xl border border-gray-200 relative"
+        class="pt-5 pb-8 px-[30px] flex flex-col items-center rounded-3xl border border-gray-200 relative transition hover:-translate-y-2.5 hover:shadow-card-shadow"
     >
         <img
             :src="`src/assets/icons/like-${!isFavorite ? 1 : 2}.svg`"
             alt="Heart icon"
             aria-label="Add to favorites"
             class="absolute top-7 left-7 w-8 h-8 object-contain transition cursor-pointer lg:hover:scale-125 active:scale-150 lg:active:scale-150"
-            @click="toggleFav"
+            @click="toggleIsFav"
         />
         <img
             src="@/assets/images/sneakers/sneakers-1.jpg"
@@ -34,9 +40,11 @@ function toggleFav() {
                 <strong>12 999 руб.</strong>
             </div>
             <img
-                src="@/assets/icons/plus.svg"
+                :src="`src/assets/icons/${inCart ? 'checked' : 'plus'}.svg`"
                 alt="Plus Icon"
                 aria-label="Add to cart"
+                class="w-8 h-8 object-contain transition cursor-pointer lg:hover:scale-125 active:scale-150 lg:active:scale-150"
+                @click="toggleInCart"
             />
         </div>
     </div>
