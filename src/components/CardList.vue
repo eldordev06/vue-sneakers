@@ -7,6 +7,7 @@ import Card from '@/components/Card.vue';
         <Card
             v-for="n in [0, 0, 0, 0, 0, 0]"
             :is-favorite="n"
+            :in-cart="n"
         />
     </div>
 </template>
