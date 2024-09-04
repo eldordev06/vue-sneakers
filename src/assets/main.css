@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hover-and-click {
+    @apply lg:hover:scale-125 active:scale-150 lg:active:scale-150
+}
