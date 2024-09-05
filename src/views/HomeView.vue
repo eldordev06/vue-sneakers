@@ -1,5 +1,6 @@
 <script setup>
 import CardList from '@/components/card/CardList.vue';
+import { Icon } from '@iconify/vue';
 </script>
 
 <template>
@@ -12,7 +13,8 @@ import CardList from '@/components/card/CardList.vue';
                 <select
                     name="sort"
                     id="sort"
-                    class="border-2 rounded-xl text-gray-500 outline-none h-11 px-5"
+                    class="border-2 focus:border-gray-400 rounded-xl text-gray-500 outline-none h-11 px-5"
+                    aria-label="sort sneakers"
                 >
                     <option value="title">По названию</option>
                     <option value="cheap">По цене (дешёвые)</option>
@@ -20,11 +22,12 @@ import CardList from '@/components/card/CardList.vue';
                 </select>
                 <label
                     for="search"
-                    class="flex border-2 items-center gap-5 px-5 h-11 rounded-xl input-focus cursor-pointer"
+                    class="flex border-2 transition items-center gap-5 px-5 h-11 rounded-xl input-focus cursor-pointer"
                 >
-                    <img
-                        src="@/assets/icons/search.svg"
-                        alt="Search icon"
+                    <Icon
+                        icon="iconamoon:search-bold"
+                        class="text-gray-300 transition"
+                        width="18"
                     />
                     <input
                         type="text"
@@ -43,5 +46,8 @@ import CardList from '@/components/card/CardList.vue';
 <style scoped>
 .input-focus:has(input:focus) {
     border-color: #c5c5c5;
+}
+.input-focus:has(input:focus) svg {
+    @apply text-gray-400;
 }
 </style>
