@@ -1,12 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 
-const props = defineProps({
-    isFavorite: Boolean,
-    inCart: Boolean,
-});
-const isFavorite = ref(props.isFavorite);
-const inCart = ref(props.inCart);
+const { product } = defineProps({ product: Object });
+const isFavorite = ref(product.isFavorite);
+const inCart = ref(product.inCart);
 
 function toggleIsFav() {
     isFavorite.value = !isFavorite.value;
@@ -28,16 +25,16 @@ function toggleInCart() {
             @click="toggleIsFav"
         />
         <img
-            src="@/assets/images/sneakers/sneakers-1.jpg"
+            :src="`/src/assets/images${product.imageUrl}`"
             alt="sneakers"
             aria-label="Add to favorites"
             class="w-3/4 object-contain"
         />
-        <h3 class="my-3.5">Мужские Кроссовки Nike Blazer Mid Suede</h3>
+        <h3 class="my-3.5">{{ product.title }}</h3>
         <div class="flex justify-between items-center w-full">
             <div class="flex flex-col">
                 <span class="text-gray-400 text-sm">Цена:</span>
-                <strong>12 999 руб.</strong>
+                <strong>{{ product.price }} руб.</strong>
             </div>
             <img
                 :src="`src/assets/icons/${inCart ? 'checked' : 'plus'}.svg`"
