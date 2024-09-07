@@ -1,6 +1,37 @@
 <script setup>
-import CardList from '@/components/card/CardList.vue';
+import { onMounted, reactive, ref, watch } from 'vue';
+import axios from 'axios';
 import { Icon } from '@iconify/vue';
+import CardList from '@/components/card/CardList.vue';
+
+const state = reactive({
+    products: [],
+    isLoading: true,
+});
+const searchQuery = ref(null);
+const sortBy = ref('title');
+
+async function fetchData() {
+    const searchQueryForApi = searchQuery.value
+        ? `&title=*${searchQuery.value}*`
+        : '';
+
+    try {
+        const response = await axios.get(
+            `https://23b81715610c7bf4.mokky.dev/products?sortBy=${sortBy.value + searchQueryForApi}`,
+        );
+        state.products = response.data;
+    } catch (error) {
+        console.error('Error fetching products', error);
+    } finally {
+        state.isLoading = false;
+    }
+}
+
+onMounted(async () => fetchData(searchQuery, sortBy));
+
+watch(sortBy, async () => fetchData());
+watch(searchQuery, async () => fetchData());
 </script>
 
 <template>
@@ -15,10 +46,11 @@ import { Icon } from '@iconify/vue';
                     id="sort"
                     class="border-2 focus:border-gray-400 rounded-xl text-gray-500 outline-none h-11 px-5"
                     aria-label="sort sneakers"
+                    v-model="sortBy"
                 >
                     <option value="title">По названию</option>
-                    <option value="cheap">По цене (дешёвые)</option>
-                    <option value="expensive">По цене (дорогие)</option>
+                    <option value="price">По цене (дешёвые)</option>
+                    <option value="-price">По цене (дорогие)</option>
                 </select>
                 <label
                     for="search"
@@ -35,11 +67,12 @@ import { Icon } from '@iconify/vue';
                         id="search"
                         placeholder="Поиск..."
                         class="outline-none text-gray-500"
+                        v-model="searchQuery"
                     />
                 </label>
             </div>
         </div>
-        <CardList />
+        <CardList :state="state" />
     </main>
 </template>
 

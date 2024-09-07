@@ -1,25 +1,9 @@
 <script setup>
-import { onMounted, reactive } from 'vue';
-import axios from 'axios';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import Card from '@/components/card/Card.vue';
 
-const state = reactive({
-    products: [],
-    isLoading: true,
-});
-
-onMounted(async () => {
-    try {
-        const response = await axios.get(
-            'https://23b81715610c7bf4.mokky.dev/products',
-        );
-        state.products = response.data;
-    } catch (error) {
-        console.error('Error fetching products', error);
-    } finally {
-        state.isLoading = false;
-    }
+defineProps({
+    state: Object,
 });
 </script>
 
