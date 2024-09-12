@@ -15,6 +15,23 @@ export default {
             container: {
                 center: true,
             },
+            backgroundImage: {
+                'text-gradient-bg': `linear-gradient(
+                    to bottom,
+                    rgb(242 187 105 / 80%),
+                    rgb(242 187 105 / 0%) 70.71%
+                    ),
+                    linear-gradient(
+                        to top left,
+                        rgb(239 151 93 / 80%),
+                        rgb(239 151 93 / 0%) 70.71%
+                    ),
+                    linear-gradient(
+                        to top right,
+                        rgb(236 118 83 / 80%),
+                        rgb(236 118 83 / 0%) 70.71%
+                    )`,
+            },
         },
     },
     plugins: [],
