@@ -18,7 +18,7 @@ const isActiveLink = (routePath) => {
                     alt="Logo"
                     aria-label="Go to home page"
                     class="w-10 h-10 object-contain mr-4"
-                    src="@/assets/icons/logo.png"
+                    src="/icons/logo.png"
                 />
             </RouterLink>
             <div>
