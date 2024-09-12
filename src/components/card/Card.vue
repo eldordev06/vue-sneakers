@@ -15,7 +15,7 @@ function toggleInCart() {
 
 <template>
     <div
-        class="pt-5 pb-8 px-[30px] flex flex-col items-center rounded-3xl border border-gray-200 relative transition lg:hover:-translate-y-2.5 lg:hover:shadow-card-shadow"
+        class="pt-5 pb-8 px-[30px] flex flex-col items-center justify-between rounded-3xl border border-gray-200 relative transition lg:hover:-translate-y-2.5 lg:hover:shadow-card-shadow"
     >
         <img
             :src="`src/assets/icons/like-${!isFavorite ? 1 : 2}.svg`"
