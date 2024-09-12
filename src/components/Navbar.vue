@@ -12,12 +12,12 @@ const isActiveLink = (routePath) => {
     <div
         class="flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"
     >
-        <div class="flex items-center">
+        <div class="flex items-center gap-4">
             <RouterLink to="/">
                 <img
                     alt="Logo"
                     aria-label="Go to home page"
-                    class="w-10 h-10 object-contain mr-4"
+                    class="w-10 h-10 object-contain"
                     src="/icons/logo.png"
                 />
             </RouterLink>
