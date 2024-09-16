@@ -1,15 +1,49 @@
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 const { product } = defineProps({ product: Object });
 const isFavorite = ref(product.isFavorite);
 const inCart = ref(product.inCart);
+const toast = useToast();
 
-function toggleIsFav() {
+function togglePatch(key, value) {
+    try {
+        if (key === 'isFavorite') {
+            axios.patch(
+                `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                {
+                    isFavorite: value,
+                },
+            );
+        } else {
+            axios.patch(
+                `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                {
+                    inCart: value,
+                },
+            );
+        }
+    } catch (e) {
+        console.error('Failed to patch data', e);
+        toast.error('Failed');
+    } finally {
+        if (value) {
+            toast.success('Added');
+        } else {
+            toast.success('Removed');
+        }
+    }
+}
+
+async function toggleIsFav() {
     isFavorite.value = !isFavorite.value;
+    togglePatch('isFavorite', isFavorite.value);
 }
 function toggleInCart() {
     inCart.value = !inCart.value;
+    togglePatch('inCart', inCart.value);
 }
 </script>
 
