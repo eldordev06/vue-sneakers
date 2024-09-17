@@ -1,14 +1,29 @@
 <script setup>
+import { ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { Icon } from '@iconify/vue';
+import Drawer from '@/components/drawer/Drawer.vue';
+
+const drawerState = ref(false);
 
 const isActiveLink = (routePath) => {
     const route = useRoute();
     return route.path === routePath;
 };
+
+function openDrawer() {
+    drawerState.value = true;
+}
+function closeDrawer() {
+    drawerState.value = false;
+}
 </script>
 
 <template>
+    <Drawer
+        v-if="drawerState"
+        :closeDrawer="closeDrawer"
+    />
     <div
         class="flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"
     >
@@ -48,8 +63,7 @@ const isActiveLink = (routePath) => {
                 />
                 <span>Главная</span>
             </RouterLink>
-            <RouterLink
-                to="/cart"
+            <button
                 :class="[
                     'flex',
                     'items-center',
@@ -62,13 +76,14 @@ const isActiveLink = (routePath) => {
                     'hover:text-gray-600',
                     isActiveLink('/cart') ? 'text-gray-600' : '',
                 ]"
+                @click="openDrawer"
             >
                 <Icon
                     icon="prime:shopping-cart"
                     class="text-xl"
                 />
                 <span>0 руб.</span>
-            </RouterLink>
+            </button>
             <RouterLink
                 to="/favorites"
                 :class="[

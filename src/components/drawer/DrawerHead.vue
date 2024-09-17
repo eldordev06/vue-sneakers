@@ -1,5 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue';
+
+defineProps({ closeAndAnimateDrawer: Function });
 </script>
 
 <template>
@@ -7,6 +9,7 @@ import { Icon } from '@iconify/vue';
         <Icon
             icon="formkit:arrowleft"
             class="text-gray-500 cursor-pointer transition lg:hover:text-black lg:hover:-translate-x-1 active:-translate-x-2 active:text-black"
+            @click="closeAndAnimateDrawer"
         />
         <h1 class="text-2xl font-bold select-none">DRAWER</h1>
     </div>
