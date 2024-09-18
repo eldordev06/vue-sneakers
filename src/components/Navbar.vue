@@ -13,9 +13,11 @@ const isActiveLink = (routePath) => {
 
 function openDrawer() {
     drawerState.value = true;
+    document.body.style.overflowY = 'hidden';
 }
 function closeDrawer() {
     drawerState.value = false;
+    document.body.style.overflowY = 'auto';
 }
 </script>
 
