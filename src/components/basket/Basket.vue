@@ -3,7 +3,7 @@ import BasketItem from '@/components/basket/BasketItem.vue';
 </script>
 
 <template>
-    <div class="flex flex-col gap-5 overflow-y-auto">
+    <div class="flex flex-col gap-5 overflow-y-auto hide-scrollbar">
         <BasketItem />
         <BasketItem />
         <BasketItem />
@@ -12,4 +12,8 @@ import BasketItem from '@/components/basket/BasketItem.vue';
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+</style>
