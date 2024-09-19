@@ -13,7 +13,7 @@ defineProps({
             alt="Sneakers"
             class="w-[70px] aspect-square object-contain mr-5"
         />
-        <div>
+        <div class="mr-3">
             <p class="mb-2 text-sm line-clamp-2">
                 {{ title }}
             </p>
@@ -23,7 +23,7 @@ defineProps({
         </div>
         <button
             aria-label="Remove item from cart"
-            class="ml-3 w-8 aspect-square cursor-pointer hover-and-click transition"
+            class="ml-auto w-8 aspect-square cursor-pointer hover-and-click transition shrink-0"
         >
             <img
                 src="/icons/close.svg"
