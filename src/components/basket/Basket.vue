@@ -1,14 +1,17 @@
 <script setup>
 import BasketItem from '@/components/basket/BasketItem.vue';
+
+defineProps({ products: Array });
 </script>
 
 <template>
     <div class="flex flex-col gap-5 overflow-y-auto hide-scrollbar">
-        <BasketItem />
-        <BasketItem />
-        <BasketItem />
-        <BasketItem />
-        <BasketItem />
+        <BasketItem
+            v-for="product in products"
+            :imageUrl="product.imageUrl"
+            :title="product.title"
+            :price="product.price"
+        />
     </div>
 </template>
 

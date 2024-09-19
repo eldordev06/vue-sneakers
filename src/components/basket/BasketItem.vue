@@ -1,17 +1,25 @@
-<script setup></script>
+<script setup>
+defineProps({
+    imageUrl: String,
+    title: String,
+    price: Number,
+});
+</script>
 
 <template>
     <div class="flex items-end px-5 py-[30px] border rounded-3xl">
         <img
-            src="/images/sneakers/sneakers-1.jpg"
+            :src="'/images' + imageUrl"
             alt="Sneakers"
             class="w-[70px] aspect-square object-contain mr-5"
         />
         <div>
             <p class="mb-2 text-sm line-clamp-2">
-                Мужские Кроссовки Nike Air Max 270
+                {{ title }}
             </p>
-            <p class="font-bold text-sm line-clamp-2">12 999 руб.</p>
+            <p class="font-bold text-sm line-clamp-2">
+                {{ price.toLocaleString().replace(',', ' ') }} руб.
+            </p>
         </div>
         <button
             aria-label="Remove item from cart"

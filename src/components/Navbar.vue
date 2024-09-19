@@ -43,6 +43,7 @@ async function getCartProducts() {
     <Drawer
         v-if="drawerState.isOpen"
         :closeDrawer="closeDrawer"
+        :drawerState="drawerState"
     />
     <div
         class="flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"

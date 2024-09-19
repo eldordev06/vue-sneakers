@@ -3,7 +3,10 @@ import Basket from '@/components/basket/Basket.vue';
 import DrawerFoot from '@/components/drawer/DrawerFoot.vue';
 import DrawerHead from '@/components/drawer/DrawerHead.vue';
 
-const { closeDrawer } = defineProps({ closeDrawer: Function });
+const { closeDrawer, drawerState } = defineProps({
+    closeDrawer: Function,
+    drawerState: Object,
+});
 function closeAndAnimateDrawer() {
     document.querySelector('#drawer-root').classList.add('blur-out');
     document.querySelector('#drawer-content').classList.add('slide-out');
@@ -25,7 +28,7 @@ function closeAndAnimateDrawer() {
             class="h-screen bg-white p-[30px] grid grid-rows-drawer slide-in relative -right-full"
         >
             <DrawerHead :closeAndAnimateDrawer="closeAndAnimateDrawer" />
-            <Basket />
+            <Basket :products="drawerState.products" />
             <DrawerFoot />
         </div>
     </div>
