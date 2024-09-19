@@ -1,10 +1,15 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { Icon } from '@iconify/vue';
+import axios from 'axios';
 import Drawer from '@/components/drawer/Drawer.vue';
 
-const drawerState = ref(false);
+const drawerState = reactive({
+    isOpen: false,
+    isLoading: true,
+    products: [],
+});
 
 const isActiveLink = (routePath) => {
     const route = useRoute();
@@ -12,18 +17,31 @@ const isActiveLink = (routePath) => {
 };
 
 function openDrawer() {
-    drawerState.value = true;
+    drawerState.isOpen = true;
     document.body.style.overflowY = 'hidden';
+    getCartProducts();
 }
 function closeDrawer() {
-    drawerState.value = false;
+    drawerState.isOpen = false;
     document.body.style.overflowY = 'auto';
+}
+async function getCartProducts() {
+    try {
+        const { data } = await axios.get(
+            `https://23b81715610c7bf4.mokky.dev/products?inCart=true`,
+        );
+        drawerState.products = data;
+    } catch (e) {
+        console.error('Error getting cart products', e);
+    } finally {
+        drawerState.isLoading = false;
+    }
 }
 </script>
 
 <template>
     <Drawer
-        v-if="drawerState"
+        v-if="drawerState.isOpen"
         :closeDrawer="closeDrawer"
     />
     <div
