@@ -1,13 +1,33 @@
 <script setup>
-defineProps({
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
+
+const { id } = defineProps({
     imageUrl: String,
     title: String,
     price: Number,
+    id: Number,
 });
+const toast = useToast();
+function removeItem() {
+    try {
+        axios.patch(`https://23b81715610c7bf4.mokky.dev/products/${id}`, {
+            inCart: false,
+        });
+        toast.success('Removed');
+    } catch (e) {
+        console.error('Error removing product', e);
+        toast.error('Failed');
+    }
+    document.getElementById('basket-item').style.display = 'none';
+}
 </script>
 
 <template>
-    <div class="flex items-end px-5 py-[30px] border rounded-3xl">
+    <div
+        id="basket-item"
+        class="flex items-end px-5 py-[30px] border rounded-3xl"
+    >
         <img
             :src="'/images' + imageUrl"
             alt="Sneakers"
@@ -24,6 +44,7 @@ defineProps({
         <button
             aria-label="Remove item from cart"
             class="ml-auto w-8 aspect-square cursor-pointer hover-and-click transition shrink-0"
+            @click="removeItem"
         >
             <img
                 src="/icons/close.svg"

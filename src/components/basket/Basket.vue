@@ -8,6 +8,7 @@ defineProps({ products: Array });
     <div class="flex flex-col gap-5 overflow-y-auto hide-scrollbar">
         <BasketItem
             v-for="product in products"
+            :id="product.id"
             :key="product.id"
             :imageUrl="product.imageUrl"
             :title="product.title"
