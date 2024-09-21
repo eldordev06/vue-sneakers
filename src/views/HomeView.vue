@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue';
-import axios from 'axios';
+import { inject, onMounted, reactive, ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import CardList from '@/components/card/CardList.vue';
 
@@ -10,28 +9,12 @@ const state = reactive({
 });
 const searchQuery = ref(null);
 const sortBy = ref('title');
+const fetchData = inject('fetchData');
 
-async function fetchData() {
-    const searchQueryForApi = searchQuery.value
-        ? `&title=*${searchQuery.value}*`
-        : '';
+onMounted(async () => fetchData(state, searchQuery, sortBy));
 
-    try {
-        const response = await axios.get(
-            `https://23b81715610c7bf4.mokky.dev/products?sortBy=${sortBy.value + searchQueryForApi}`,
-        );
-        state.products = response.data;
-    } catch (error) {
-        console.error('Error fetching products', error);
-    } finally {
-        state.isLoading = false;
-    }
-}
-
-onMounted(async () => fetchData(searchQuery, sortBy));
-
-watch(sortBy, async () => fetchData());
-watch(searchQuery, async () => fetchData());
+watch(sortBy, async () => fetchData(state, searchQuery, sortBy));
+watch(searchQuery, async () => fetchData(state, searchQuery, sortBy));
 </script>
 
 <template>
