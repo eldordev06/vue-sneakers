@@ -1,17 +1,12 @@
 <script setup>
-import { inject, onMounted, reactive, ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import CardList from '@/components/card/CardList.vue';
 
-const state = reactive({
-    products: [],
-    isLoading: true,
-});
+const { state } = defineProps({ state: Object });
 const searchQuery = ref(null);
 const sortBy = ref('title');
 const fetchData = inject('fetchData');
-
-onMounted(async () => fetchData(state, searchQuery, sortBy));
 
 watch(sortBy, async () => fetchData(state, searchQuery, sortBy));
 watch(searchQuery, async () => fetchData(state, searchQuery, sortBy));
