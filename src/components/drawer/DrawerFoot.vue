@@ -1,5 +1,7 @@
 <script setup>
 import { Icon } from '@iconify/vue';
+
+defineProps({ products: Object })
 </script>
 
 <template>
@@ -15,7 +17,8 @@ import { Icon } from '@iconify/vue';
             <span class="text-nowrap font-semibold">1074 руб.</span>
         </p>
         <button
-            class="mt-6 hover:bg-lime-400 transition active:bg-lime-300 bg-lime-500 w-full h-16 rounded-2xl text-white font-medium flex items-center justify-center relative"
+            class="disabled:bg-gray-400 disabled:cursor-not-allowed mt-6 hover:bg-lime-400 transition active:bg-lime-300 bg-lime-500 w-full h-16 rounded-2xl text-white font-medium flex items-center justify-center relative"
+            :disabled="products.length ? false : true"
         >
             <span>Оформить заказ</span>
             <Icon

@@ -29,7 +29,7 @@ function closeAndAnimateDrawer() {
         >
             <DrawerHead :closeAndAnimateDrawer="closeAndAnimateDrawer" />
             <Basket :products="drawerState.products" />
-            <DrawerFoot />
+            <DrawerFoot :products="drawerState.products" />
         </div>
     </div>
 </template>
