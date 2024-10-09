@@ -8,41 +8,60 @@ const isFavorite = ref(product.isFavorite);
 const inCart = ref(product.inCart);
 const toast = useToast();
 
-function togglePatch(key, value) {
+async function togglePatch(key, value) {
     try {
         if (key === 'isFavorite') {
-            axios.patch(
-                `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
-                {
-                    isFavorite: value,
-                },
-            );
+            if (value) {
+                await axios.patch(
+                    `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                    {
+                        isFavorite: false,
+                    },
+                );
+                isFavorite.value = false;
+            } else {
+                await axios.patch(
+                    `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                    {
+                        isFavorite: true,
+                    },
+                );
+                isFavorite.value = true;
+            }
         } else {
-            axios.patch(
-                `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
-                {
-                    inCart: value,
-                },
-            );
+            if (value) {
+                await axios.patch(
+                    `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                    {
+                        inCart: false,
+                    },
+                );
+                inCart.value = false;
+            } else {
+                await axios.patch(
+                    `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
+                    {
+                        inCart: true,
+                    },
+                );
+                inCart.value = true;
+            }
         }
-    } catch (e) {
-        console.error('Failed to patch data', e);
-        toast.error('Failed');
-    } finally {
         if (value) {
             toast.success('Added');
         } else {
             toast.success('Removed');
         }
+    } catch (e) {
+        console.error('Failed to patch data', e);
+        toast.error('Failed');
     }
 }
 
-async function toggleIsFav() {
-    isFavorite.value = !isFavorite.value;
+function toggleIsFav() {
     togglePatch('isFavorite', isFavorite.value);
 }
 function toggleInCart() {
-    inCart.value = !inCart.value;
     togglePatch('inCart', inCart.value);
 }
 </script>
