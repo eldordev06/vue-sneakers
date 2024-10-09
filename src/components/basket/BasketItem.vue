@@ -9,17 +9,17 @@ const { id } = defineProps({
     id: Number,
 });
 const toast = useToast();
-function removeItem() {
+async function removeItem() {
     try {
-        axios.patch(`https://23b81715610c7bf4.mokky.dev/products/${id}`, {
+        await axios.patch(`https://23b81715610c7bf4.mokky.dev/products/${id}`, {
             inCart: false,
         });
         toast.success('Removed');
+        document.getElementById('basket-item').style.display = 'none';
     } catch (e) {
         console.error('Error removing product', e);
         toast.error('Failed');
     }
-    document.getElementById('basket-item').style.display = 'none';
 }
 </script>
 
