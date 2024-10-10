@@ -86,7 +86,7 @@ function toggleInCart() {
         <div class="flex justify-between items-center w-full">
             <div class="flex flex-col">
                 <span class="text-gray-400 text-sm">Цена:</span>
-                <strong>{{ product.price }} руб.</strong>
+                <strong>{{ product.price.toLocaleString().replace(',', ' ') }} руб.</strong>
             </div>
             <img
                 :src="`/icons/${inCart ? 'checked' : 'plus'}.svg`"
