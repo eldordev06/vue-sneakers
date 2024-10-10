@@ -19,6 +19,7 @@ async function togglePatch(key, value) {
                     },
                 );
                 isFavorite.value = false;
+                toast.success('Removed');
             } else {
                 await axios.patch(
                     `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
@@ -27,6 +28,7 @@ async function togglePatch(key, value) {
                     },
                 );
                 isFavorite.value = true;
+                toast.success('Added');
             }
         } else {
             if (value) {
@@ -37,6 +39,7 @@ async function togglePatch(key, value) {
                     },
                 );
                 inCart.value = false;
+                toast.success('Removed');
             } else {
                 await axios.patch(
                     `https://23b81715610c7bf4.mokky.dev/products/${product.id}`,
@@ -45,12 +48,8 @@ async function togglePatch(key, value) {
                     },
                 );
                 inCart.value = true;
+                toast.success('Added');
             }
-        }
-        if (value) {
-            toast.success('Added');
-        } else {
-            toast.success('Removed');
         }
     } catch (e) {
         console.error('Failed to patch data', e);
