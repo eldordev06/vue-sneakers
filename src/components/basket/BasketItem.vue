@@ -15,7 +15,7 @@ async function removeItem() {
             inCart: false,
         });
         toast.success('Removed');
-        document.getElementById('basket-item').style.display = 'none';
+        document.getElementById('basket-item-' + id).style.display = 'none';
     } catch (e) {
         console.error('Error removing product', e);
         toast.error('Failed');
@@ -25,7 +25,7 @@ async function removeItem() {
 
 <template>
     <div
-        id="basket-item"
+        :id="'basket-item-' + id"
         class="flex items-end px-5 py-[30px] border rounded-3xl"
     >
         <img
