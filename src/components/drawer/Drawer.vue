@@ -1,13 +1,13 @@
 <script setup>
+import { inject } from "vue";
 import Basket from '@/components/basket/Basket.vue';
 import DrawerFoot from '@/components/drawer/DrawerFoot.vue';
 import DrawerHead from '@/components/drawer/DrawerHead.vue';
+import InfoBlock from "../InfoBlock.vue";
 
-const { closeDrawer, drawerState } = defineProps({
-    closeDrawer: Function,
-    drawerState: Object,
-});
-function closeAndAnimateDrawer() {
+const { closeDrawer, totalPrice } = inject('drawer');
+
+function closeAnimate() {
     document.querySelector('#drawer-root').classList.add('blur-out');
     document.querySelector('#drawer-content').classList.add('slide-out');
     setTimeout(closeDrawer, 500);
@@ -21,15 +21,21 @@ function closeAndAnimateDrawer() {
     >
         <div
             class="flex-grow"
-            @click="closeAndAnimateDrawer"
+            @click="closeAnimate"
         ></div>
         <div
             id="drawer-content"
-            class="h-screen bg-white p-[30px] grid grid-rows-drawer slide-in relative -right-full"
+            class="h-screen w-full sm:w-[400px] bg-white p-[30px] grid grid-rows-drawer slide-in relative -right-full"
         >
-            <DrawerHead :closeAndAnimateDrawer="closeAndAnimateDrawer" />
-            <Basket :products="drawerState.products" />
-            <DrawerFoot :products="drawerState.products" />
+            <DrawerHead @close-animate="closeAnimate" />
+            <Basket v-if="totalPrice" />
+            <DrawerFoot v-if="totalPrice" />
+            <InfoBlock v-else
+                image-url="/icons/package-icon.png"
+                title="Корзина пустая"
+                descr="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+                @close-animate="closeAnimate"
+            />
         </div>
     </div>
 </template>

@@ -1,15 +1,8 @@
 <script setup>
-import { inject, ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import CardList from '@/components/card/CardList.vue';
 
-const { state } = defineProps({ state: Object });
-const searchQuery = ref(null);
-const sortBy = ref('title');
-const fetchData = inject('fetchData');
-
-watch(sortBy, async () => fetchData(state, searchQuery, sortBy));
-watch(searchQuery, async () => fetchData(state, searchQuery, sortBy));
+defineProps({ filters: Object });
 </script>
 
 <template>
@@ -24,11 +17,11 @@ watch(searchQuery, async () => fetchData(state, searchQuery, sortBy));
                     id="sort"
                     class="border-2 focus:border-gray-400 rounded-xl text-gray-500 outline-none h-11 px-5"
                     aria-label="sort sneakers"
-                    v-model="sortBy"
+                    v-model="filters.sortBy"
                 >
                     <option value="title">По названию</option>
-                    <option value="price">По цене (дешёвые)</option>
-                    <option value="-price">По цене (дорогие)</option>
+                    <option value="price.value">По цене (дешёвые)</option>
+                    <option value="-price.value">По цене (дорогие)</option>
                 </select>
                 <label
                     for="search"
@@ -45,12 +38,12 @@ watch(searchQuery, async () => fetchData(state, searchQuery, sortBy));
                         id="search"
                         placeholder="Поиск..."
                         class="outline-none text-gray-500"
-                        v-model="searchQuery"
+                        v-model="filters.searchQuery"
                     />
                 </label>
             </div>
         </div>
-        <CardList :state="state" />
+        <CardList />
     </main>
 </template>
 

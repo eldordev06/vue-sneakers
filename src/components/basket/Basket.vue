@@ -1,18 +1,18 @@
 <script setup>
+import { inject } from "vue";
 import BasketItem from '@/components/basket/BasketItem.vue';
 
-defineProps({ products: Array });
+const { localProducts } = inject('drawer');
+const addToCart = inject('addToCart');
 </script>
 
 <template>
     <div class="flex flex-col gap-5 overflow-y-auto hide-scrollbar">
         <BasketItem
-            v-for="product in products"
-            :id="product.id"
+            v-for="product in localProducts.cart"
             :key="product.id"
-            :imageUrl="product.imageUrl"
-            :title="product.title"
-            :price="product.price"
+            :product="product"
+            @add-to-cart="addToCart"
         />
     </div>
 </template>

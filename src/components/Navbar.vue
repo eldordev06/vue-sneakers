@@ -1,50 +1,18 @@
 <script setup>
-import { reactive } from 'vue';
+import { inject } from "vue";
 import { RouterLink, useRoute } from 'vue-router';
 import { Icon } from '@iconify/vue';
-import axios from 'axios';
-import Drawer from '@/components/drawer/Drawer.vue';
 
-const drawerState = reactive({
-    isOpen: false,
-    isLoading: true,
-    products: [],
-});
+const emits = defineEmits(['openDrawer']),
+    { totalPrice } = inject('drawer');
 
-const isActiveLink = (routePath) => {
+function isActiveLink(routePath) {
     const route = useRoute();
     return route.path === routePath;
 };
-
-function openDrawer() {
-    drawerState.isOpen = true;
-    document.body.style.overflowY = 'hidden';
-    getCartProducts();
-}
-function closeDrawer() {
-    drawerState.isOpen = false;
-    document.body.style.overflowY = 'auto';
-}
-async function getCartProducts() {
-    try {
-        const { data } = await axios.get(
-            `https://23b81715610c7bf4.mokky.dev/products?inCart=true`,
-        );
-        drawerState.products = data;
-    } catch (e) {
-        console.error('Error getting cart products', e);
-    } finally {
-        drawerState.isLoading = false;
-    }
-}
 </script>
 
 <template>
-    <Drawer
-        v-if="drawerState.isOpen"
-        :closeDrawer="closeDrawer"
-        :drawerState="drawerState"
-    />
     <div
         class="flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"
     >
@@ -74,7 +42,7 @@ async function getCartProducts() {
                     'transition',
                     'duration-200',
                     'cursor-pointer',
-                    'hover:text-gray-600',
+                    'lg:hover:text-gray-600',
                     isActiveLink('/') ? 'text-gray-600' : '',
                 ]"
             >
@@ -94,16 +62,16 @@ async function getCartProducts() {
                     'transition',
                     'duration-200',
                     'cursor-pointer',
-                    'hover:text-gray-600',
+                    'lg:hover:text-gray-600',
                     isActiveLink('/cart') ? 'text-gray-600' : '',
                 ]"
-                @click="openDrawer"
+                @click="emits('openDrawer')"
             >
                 <Icon
                     icon="prime:shopping-cart"
                     class="text-xl"
                 />
-                <span>0 руб.</span>
+                <strong>{{ totalPrice.toLocaleString().replaceAll(',', ' ') }} руб.</strong>
             </button>
             <RouterLink
                 to="/favorites"
@@ -116,7 +84,7 @@ async function getCartProducts() {
                     'transition',
                     'duration-200',
                     'cursor-pointer',
-                    'hover:text-gray-600',
+                    'lg:hover:text-gray-600',
                     isActiveLink('/favorites') ? 'text-gray-600' : '',
                 ]"
             >
@@ -137,7 +105,7 @@ async function getCartProducts() {
                     'transition',
                     'duration-200',
                     'cursor-pointer',
-                    'hover:text-gray-600',
+                    'lg:hover:text-gray-600',
                     isActiveLink('/profile') ? 'text-gray-600' : '',
                 ]"
             >

@@ -1,10 +1,11 @@
 <script setup>
+import { inject } from "vue";
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import Card from '@/components/card/Card.vue';
 
-defineProps({
-    state: Object,
-});
+const state = inject('state');
+const addToFavorites = inject('addToFavorites');
+const addToCart = inject('addToCart');
 </script>
 
 <template>
@@ -22,6 +23,8 @@ defineProps({
             v-for="product in state.products"
             :key="product.id"
             :product="product"
+            @add-to-favorites="addToFavorites"
+            @add-to-cart="addToCart"
         />
     </div>
 </template>
