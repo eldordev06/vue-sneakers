@@ -1,7 +1,6 @@
 <script setup>
 const { product } = defineProps({ product: Object });
 defineEmits(['addToCart']);
-
 </script>
 
 <template>

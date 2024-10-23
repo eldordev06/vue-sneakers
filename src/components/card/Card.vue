@@ -1,6 +1,6 @@
 <script setup>
 defineProps({ product: Object });
-const emit = defineEmits(['addToFavorites', 'addToCart'])
+defineEmits(['addToFavorites', 'addToCart'])
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const emit = defineEmits(['addToFavorites', 'addToCart'])
             alt="Heart icon"
             aria-label="Remove from favorites."
             class="absolute top-7 left-7 w-8 h-8 object-contain transition cursor-pointer hover-and-click"
-            @click="emit('addToFavorites', product)"
+            @click="$emit('addToFavorites', product)"
         />
         <img
             v-else
@@ -21,7 +21,7 @@ const emit = defineEmits(['addToFavorites', 'addToCart'])
             alt="Heart icon"
             aria-label="Add to favorites."
             class="absolute top-7 left-7 w-8 h-8 object-contain transition cursor-pointer hover-and-click"
-            @click="emit('addToFavorites', product)"
+            @click="$emit('addToFavorites', product)"
         />
         <img
             :src="`/images${product.imageUrl}`"
@@ -42,7 +42,7 @@ const emit = defineEmits(['addToFavorites', 'addToCart'])
                 alt="Check mark icon"
                 aria-label="Remove from cart."
                 class="w-8 h-8 object-contain transition cursor-pointer hover-and-click"
-                @click="emit('addToCart', product)"
+                @click="$emit('addToCart', product)"
             />
             <img
                 v-else
@@ -50,7 +50,7 @@ const emit = defineEmits(['addToFavorites', 'addToCart'])
                 alt="Plus icon"
                 aria-label="Add to cart."
                 class="w-8 h-8 object-contain transition cursor-pointer hover-and-click"
-                @click="emit('addToCart', product)"
+                @click="$emit('addToCart', product)"
             />
         </div>
     </div>

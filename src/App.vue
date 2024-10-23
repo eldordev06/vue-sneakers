@@ -7,17 +7,18 @@ import Navbar from '@/components/Navbar.vue';
 import Drawer from './components/drawer/Drawer.vue';
 
 const state = reactive({
-        products: Array,
+        products: [],
         isLoading: true,
     }),
     orderState = reactive({
-        products: Array,
-        totalPrice: Number,
+        orderId: null,
+        products: [],
+        totalPrice: 0,
         isCreatingOrder: false
     }),
     filters = reactive({
         searchQuery: '',
-        sortBy: 'title',
+        sortBy: 'title'
     }),
     localProducts = reactive({
         favorites: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [],
@@ -101,6 +102,7 @@ function openDrawer() {
 function closeDrawer() {
     document.body.style.overflowY = 'auto';
     isDrawerOpen.value = false;
+    orderState.orderId = null;
 }
 function createOrder() {
     orderState.isCreatingOrder = true;
@@ -117,17 +119,19 @@ function createOrder() {
     
     setTimeout(async () => {
         try {
-            localProducts.orders.push(order);
             localProducts.cart = [];
             
             await fetchProducts();
             
+            orderState.orderId = order.id;
+            localProducts.orders.push(order);
             localStorage.setItem('orders', JSON.stringify(localProducts.orders));
             localStorage.removeItem('cart');
-
+            
             toast.success('Заказ был успешно создан');
         } catch (error) {
-           console.error(error);
+            console.error(error);
+            localProducts.cart = JSON.parse(localStorage.getItem('cart'));
         } finally {
             orderState.isCreatingOrder = false;
         }
@@ -158,10 +162,18 @@ provide('drawer', {
         <div class="bg-white rounded-[20px] min-h-screen container">
             <Drawer v-if="isDrawerOpen" />
             <Navbar @open-drawer="openDrawer" />
-            <RouterView :filters="filters"
-            />
+            <main class="relative z-0 px-10 sm:px-[60px]">
+                <RouterView :state="state" :filters="filters" />
+            </main>
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.input-focus:has(input:focus) {
+    @apply border-gray-400;
+}
+.input-focus:has(input:focus) svg {
+    @apply text-gray-400;
+}
+</style>

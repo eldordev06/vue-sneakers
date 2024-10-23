@@ -4,10 +4,13 @@ import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 
 defineProps({
-    imageUrl: String,
-    imageDescr: String,
-    title: String,
-    descr: String
+    imageUrl: '',
+    imageWidth: '',
+    imageHeight: '',
+    imageDescr: '',
+    title: '',
+    titleColor: '',
+    descr: ''
 });
 const emit = defineEmits(['closeAnimate']);
 const router = useRouter();
@@ -23,9 +26,9 @@ function goBack() {
 </script>
 
 <template>
-    <div class="flex flex-col items-center text-center h-full justify-center">
-        <img height="120" width="120" :src="imageUrl" :alt="imageDescr">
-        <h2 class="mt-5 text-2xl font-medium">{{ title }}</h2>
+    <div class="flex flex-col items-center text-center justify-center">
+        <img :height="imageHeight" :width="imageWidth" :src="imageUrl" :alt="imageDescr">
+        <h2 :class="`mt-5 text-2xl font-medium ${titleColor}`">{{ title }}</h2>
         <p class="mt-2.5 text-gray-500">{{ descr }}</p>
         <button class="select-none mt-10 lg:hover:bg-lime-400 transition active:bg-lime-300 bg-lime-500 w-60 h-14 rounded-2xl text-white font-medium flex gap-3 items-center justify-center"
                 @click="goBack"

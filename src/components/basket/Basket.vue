@@ -7,8 +7,8 @@ const addToCart = inject('addToCart');
 </script>
 
 <template>
-    <div class="flex flex-col gap-5 overflow-y-auto hide-scrollbar">
-        <BasketItem
+    <div :class="`flex flex-col ${localProducts.cart.length ? 'flex-grow' : ''} gap-5 overflow-y-auto hide-scrollbar`" v-auto-animate>
+    <BasketItem
             v-for="product in localProducts.cart"
             :key="product.id"
             :product="product"
