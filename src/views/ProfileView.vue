@@ -1,7 +1,7 @@
 <script setup>
 import { inject } from 'vue';
 import InfoBlock from '@/components/InfoBlock.vue';
-import OrderList from '@/components/order/orderList.vue';
+import OrderList from '@/components/order/OrderList.vue';
 
 const orders = inject('orders');
 </script>
