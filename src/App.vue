@@ -38,7 +38,8 @@ const state = reactive({
     ),
     taxPct = 5,
     taxation = computed(() => Math.round((price.value / 100) * taxPct)),
-    totalPrice = computed(() => price.value + taxation.value);
+    totalPrice = computed(() => price.value + taxation.value),
+    editingOrder = false;
 
 async function fetchProducts() {
     const params = {
@@ -125,10 +126,18 @@ function createOrder() {
     orderState.products = localProducts.cart;
     orderState.totalPrice = totalPrice.value;
 
+    let orderId = null;
+
+    if (localProducts.orders.length) {
+        orderId = localProducts.orders[localProducts.orders.length - 1].id + 1;
+    } else {
+        orderId = localProducts.orders.length + 1;
+    }
+
     toast.info('Оформлаем ваш заказ...');
 
     const order = {
-        id: localProducts.orders.length,
+        id: orderId,
         products: orderState.products,
         totalPrice: orderState.totalPrice,
     };
@@ -156,6 +165,14 @@ function createOrder() {
         }
     }, 3000);
 }
+function deleteOrder(order) {
+    localProducts.orders.splice(
+        localProducts.orders.find((obj) => obj.id === order.id),
+        1,
+    );
+    localStorage.setItem('orders', JSON.stringify(localProducts.orders));
+    toast.success('Заказ был успешно удалён');
+}
 
 onMounted(async () => await fetchProducts());
 watch(filters, async () => await fetchProducts());
@@ -174,6 +191,8 @@ provide('drawer', {
     createOrder,
     orderState,
 });
+provide('orders', localProducts.orders);
+provide('deleteOrder', deleteOrder);
 </script>
 
 <template>

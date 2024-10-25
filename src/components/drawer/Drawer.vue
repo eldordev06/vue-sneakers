@@ -1,5 +1,5 @@
 <script setup>
-import { inject } from 'vue';
+import { inject, watch } from 'vue';
 import Basket from '@/components/basket/Basket.vue';
 import DrawerFoot from '@/components/drawer/DrawerFoot.vue';
 import DrawerHead from '@/components/drawer/DrawerHead.vue';
