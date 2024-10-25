@@ -14,8 +14,8 @@ import { Icon } from '@iconify/vue';
                 404 Not Found
             </h1>
             <p class="text-xl mb-5 text-transparent">
-                    This page does not exist
-                </p>
+                This page does not exist
+            </p>
         </div>
         <div class="flex gap-5 mt-6">
             <button

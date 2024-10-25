@@ -4,8 +4,7 @@ defineEmits(['addToCart']);
 </script>
 
 <template>
-    <div class="flex items-end px-5 py-[30px] border rounded-3xl"
-    >
+    <div class="flex items-end px-5 py-[30px] border rounded-3xl">
         <img
             :src="'/images' + product.imageUrl"
             alt="Sneakers"

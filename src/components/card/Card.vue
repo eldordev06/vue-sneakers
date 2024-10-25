@@ -1,6 +1,6 @@
 <script setup>
 defineProps({ product: Object });
-defineEmits(['addToFavorites', 'addToCart'])
+defineEmits(['addToFavorites', 'addToCart']);
 </script>
 
 <template>

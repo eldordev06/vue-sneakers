@@ -1,8 +1,9 @@
 <script setup>
-import { inject } from "vue";
+import { inject } from 'vue';
 import { Icon } from '@iconify/vue';
 
-const { totalPrice, taxation, taxPct, createOrder, orderState } = inject('drawer');
+const { totalPrice, taxation, taxPct, createOrder, orderState } =
+    inject('drawer');
 </script>
 
 <template>
@@ -10,7 +11,9 @@ const { totalPrice, taxation, taxPct, createOrder, orderState } = inject('drawer
         <p class="flex items-center gap-2.5 mb-5">
             <span>Итого:</span>
             <span class="w-full h-0 border border-dashed"></span>
-            <span class="text-nowrap font-semibold">{{ totalPrice.toLocaleString().replace(',', ' ') }} руб.</span>
+            <span class="text-nowrap font-semibold"
+                >{{ totalPrice.toLocaleString().replace(',', ' ') }} руб.</span
+            >
         </p>
         <p class="flex items-center gap-2.5">
             <span class="text-nowrap">Налог {{ taxPct + '%' }}:</span>
@@ -25,7 +28,11 @@ const { totalPrice, taxation, taxPct, createOrder, orderState } = inject('drawer
             @click.once="createOrder"
         >
             <span class="inline-block w-[60%]">
-            {{ orderState.isCreatingOrder ? 'Подождите, заказ оформляется...' : 'Оформить заказ' }}
+                {{
+                    orderState.isCreatingOrder
+                        ? 'Подождите, заказ оформляется...'
+                        : 'Оформить заказ'
+                }}
             </span>
             <Icon
                 icon="formkit:arrowright"

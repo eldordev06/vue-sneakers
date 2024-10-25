@@ -1,5 +1,5 @@
 <script setup>
-import { inject } from "vue";
+import { inject } from 'vue';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 import Card from '@/components/card/Card.vue';
 
@@ -14,7 +14,7 @@ const addToCart = inject('addToCart');
         <div
             v-if="state.isLoading"
             class="text-center text-gray-500 py-6"
-            >
+        >
             <PulseLoader />
         </div>
         <div

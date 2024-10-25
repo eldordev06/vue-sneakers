@@ -1,5 +1,5 @@
 <script setup>
-import { inject } from "vue";
+import { inject } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { Icon } from '@iconify/vue';
 
@@ -9,14 +9,17 @@ const emits = defineEmits(['openDrawer']),
 function isActiveLink(routePath) {
     const route = useRoute();
     return route.path === routePath;
-};
+}
 </script>
 
 <template>
     <div
         class="bg-white z-10 relative flex flex-col gap-10 sm:gap-5 lg:flex-row lg:justify-between items-center flex-wrap p-5 sm:p-11 border-b min-w-full"
     >
-        <RouterLink to="/" class="flex items-center gap-4">
+        <RouterLink
+            to="/"
+            class="flex items-center gap-4"
+        >
             <img
                 alt="Logo"
                 aria-label="Go to home page"
@@ -69,7 +72,12 @@ function isActiveLink(routePath) {
                     icon="prime:shopping-cart"
                     class="text-xl"
                 />
-                <strong>{{ totalPrice.toLocaleString().replaceAll(',', ' ') }} руб.</strong>
+                <strong
+                    >{{
+                        totalPrice.toLocaleString().replaceAll(',', ' ')
+                    }}
+                    руб.</strong
+                >
             </button>
             <RouterLink
                 to="/favorites"
