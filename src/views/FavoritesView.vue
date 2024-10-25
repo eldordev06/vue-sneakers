@@ -15,7 +15,7 @@ let favState = reactive({
     isLoading: state.isLoading
 });
 
-watch(state, () => {
+watch(() => state, () => {
     favState.isLoading = state.isLoading;
     favState.products = state.products.filter(obj => {
         if(obj.isFavorite === true) {
