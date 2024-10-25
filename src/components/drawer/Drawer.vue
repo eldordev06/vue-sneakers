@@ -1,13 +1,13 @@
 <script setup>
+import { inject } from "vue";
 import Basket from '@/components/basket/Basket.vue';
 import DrawerFoot from '@/components/drawer/DrawerFoot.vue';
 import DrawerHead from '@/components/drawer/DrawerHead.vue';
+import InfoBlock from "../InfoBlock.vue";
 
-const { closeDrawer, drawerState } = defineProps({
-    closeDrawer: Function,
-    drawerState: Object,
-});
-function closeAndAnimateDrawer() {
+const { closeDrawer, totalPrice, orderState } = inject('drawer');
+console.log(orderState.orderId);
+function closeAnimate() {
     document.querySelector('#drawer-root').classList.add('blur-out');
     document.querySelector('#drawer-content').classList.add('slide-out');
     setTimeout(closeDrawer, 500);
@@ -17,19 +17,41 @@ function closeAndAnimateDrawer() {
 <template>
     <div
         id="drawer-root"
-        class="bg-drawer-bg blur-in backdrop-blur-0 fixed top-0 bottom-0 left-0 right-0 z-10 flex"
+        class="bg-drawer-bg blur-in backdrop-blur-0 fixed top-0 bottom-0 left-0 right-0 z-20 flex"
     >
         <div
             class="flex-grow"
-            @click="closeAndAnimateDrawer"
+            @click="closeAnimate"
         ></div>
         <div
             id="drawer-content"
-            class="h-screen bg-white p-[30px] grid grid-rows-drawer slide-in relative -right-full"
+            class="h-screen w-full sm:w-[400px] bg-white p-[30px] flex flex-col slide-in relative -right-full"
         >
-            <DrawerHead :closeAndAnimateDrawer="closeAndAnimateDrawer" />
-            <Basket :products="drawerState.products" />
-            <DrawerFoot />
+            <DrawerHead @close-animate="closeAnimate" />
+            <Basket />
+            <DrawerFoot v-if="totalPrice" />
+            
+            <div v-else class="flex-grow flex">
+                <InfoBlock v-if="!orderState.orderId"
+                        image-url="/icons/package-icon.png"
+                        image-descr="Empty open box."
+                        image-width="120"
+                        image-height="120"
+                        title="Корзина пустая"
+                        descr="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+                        @close-animate="closeAnimate"
+                    />
+                <InfoBlock v-else
+                        image-url="/icons/order-success-icon.png"
+                        image-descr="Paper with a checkmark."
+                        image-width="83"
+                        image-height="120"
+                        title="Заказ оформлен!"
+                        title-color="text-lime-500"
+                        :descr="`Ваш заказ #${orderState.orderId} скоро будет передан курьерской доставке`"
+                        @close-animate="closeAnimate"
+                    />
+            </div>
         </div>
     </div>
 </template>
