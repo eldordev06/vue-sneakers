@@ -6,7 +6,7 @@ import DrawerHead from '@/components/drawer/DrawerHead.vue';
 import InfoBlock from "../InfoBlock.vue";
 
 const { closeDrawer, totalPrice, orderState } = inject('drawer');
-console.log(orderState.orderId);
+
 function closeAnimate() {
     document.querySelector('#drawer-root').classList.add('blur-out');
     document.querySelector('#drawer-content').classList.add('slide-out');
