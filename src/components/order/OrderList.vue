@@ -1,6 +1,6 @@
 <script setup>
 import { inject } from 'vue';
-import { Icon } from "@iconify/vue";
+import { Icon } from '@iconify/vue';
 import OrderItemList from '@/components/order/OrderItemList.vue';
 
 defineProps({ order: Object, isLastOrder: Boolean });
@@ -44,14 +44,10 @@ const deleteOrder = inject('deleteOrder');
                         class="flex items-center gap-2 bg-red-500 px-6 py-3 select-none rounded-xl text-white transition font-medium in active:shadow-inner active:bg-red-600 active:shadow-black shadow lg:hover:shadow-black shadow-black lg:hover:shadow-md"
                         @click="deleteOrder(order)"
                     >
-                        <Icon icon="ion:trash-outline" width="24" />
-                        <span>Удалить</span>
-                    </button>
-                    <button
-                        class="flex items-center gap-2 bg-red-500 px-6 py-3 select-none rounded-xl text-white transition font-medium in active:shadow-inner active:bg-red-600 active:shadow-black shadow lg:hover:shadow-black shadow-black lg:hover:shadow-md"
-                        @click="deleteOrder(order)"
-                    >
-                        <Icon icon="ion:trash-outline" width="24" />
+                        <Icon
+                            icon="ion:trash-outline"
+                            width="24"
+                        />
                         <span>Удалить</span>
                     </button>
                 </div>
