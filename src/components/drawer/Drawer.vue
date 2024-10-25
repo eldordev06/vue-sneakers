@@ -25,7 +25,7 @@ function closeAnimate() {
         ></div>
         <div
             id="drawer-content"
-            class="h-screen w-full sm:w-[400px] bg-white p-[30px] flex flex-col slide-in relative -right-full"
+            class="h-full w-full sm:w-[400px] bg-white p-[30px] flex flex-col slide-in relative -right-full"
         >
             <DrawerHead @close-animate="closeAnimate" />
             <Basket />
