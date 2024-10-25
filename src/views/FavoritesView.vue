@@ -1,27 +1,14 @@
 <script setup>
-import { reactive, watch } from "vue";
-import { Icon } from "@iconify/vue";
-import CardList from "@/components/card/CardList.vue";
-import InfoBlock from "@/components/InfoBlock.vue";
+import { computed, reactive, toRef } from 'vue';
+import { Icon } from '@iconify/vue';
+import CardList from '@/components/card/CardList.vue';
+import InfoBlock from '@/components/InfoBlock.vue';
 
 const { state } = defineProps({ state: Object, filters: Object });
 
-let favState = reactive({
-    products: state.products.filter(obj => {
-        if(obj.isFavorite === true) {
-            return obj
-        }
-    }),
-    isLoading: state.isLoading
-});
-
-watch(() => state, () => {
-    favState.isLoading = state.isLoading;
-    favState.products = state.products.filter(obj => {
-        if(obj.isFavorite === true) {
-            return obj
-        }
-    });
+const favState = reactive({
+    isLoading: toRef(state, 'isLoading'),
+    products: computed(() => state.products.filter((obj) => obj.isFavorite)),
 });
 </script>
 
@@ -65,8 +52,18 @@ watch(() => state, () => {
         </div>
         <CardList :state="favState" />
     </div>
-    <div v-else class="mt-20" >
-        <InfoBlock image-url="/icons/emoji-1.png" image-width="70" image-height="70" image-descr="Sad face emoji." title="Закладок нет :(" descr="Вы ничего не добавляли в закладки" />
+    <div
+        v-else
+        class="mt-20"
+    >
+        <InfoBlock
+            image-url="/icons/emoji-1.png"
+            image-width="70"
+            image-height="70"
+            image-descr="Sad face emoji."
+            title="Закладок нет :("
+            descr="Вы ничего не добавляли в закладки"
+        />
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, reactive, watch, provide, ref, computed } from 'vue';
-import axios from "axios";
-import { useToast } from "vue-toastification";
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
 import { RouterView } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import Drawer from './components/drawer/Drawer.vue';
@@ -14,54 +14,67 @@ const state = reactive({
         orderId: null,
         products: [],
         totalPrice: 0,
-        isCreatingOrder: false
+        isCreatingOrder: false,
     }),
     filters = reactive({
         searchQuery: '',
-        sortBy: 'title'
+        sortBy: 'title',
     }),
     localProducts = reactive({
-        favorites: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [],
-        cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
-        orders: localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : []
+        favorites: localStorage.getItem('favorites')
+            ? JSON.parse(localStorage.getItem('favorites'))
+            : [],
+        cart: localStorage.getItem('cart')
+            ? JSON.parse(localStorage.getItem('cart'))
+            : [],
+        orders: localStorage.getItem('orders')
+            ? JSON.parse(localStorage.getItem('orders'))
+            : [],
     }),
     toast = useToast(),
     isDrawerOpen = ref(false),
-    price = computed(() => localProducts.cart.reduce((acc, product) => acc + product.price, 0)),
+    price = computed(() =>
+        localProducts.cart.reduce((acc, product) => acc + product.price, 0),
+    ),
     taxPct = 5,
-    taxation = computed(() => Math.round(price.value / 100 * taxPct)),
+    taxation = computed(() => Math.round((price.value / 100) * taxPct)),
     totalPrice = computed(() => price.value + taxation.value);
 
 async function fetchProducts() {
     const params = {
-        sortBy: filters.sortBy
-    }
+        sortBy: filters.sortBy,
+    };
 
     if (filters.searchQuery) {
-        params.title = `*${filters.searchQuery.trim()}*`
+        params.title = `*${filters.searchQuery.trim()}*`;
     }
 
     try {
         const { data } = await axios.get(
-            `https://23b81715610c7bf4.mokky.dev/products`, {
-                params
-            }
+            `https://23b81715610c7bf4.mokky.dev/products`,
+            {
+                params,
+            },
         );
-        state.products = data.map(obj => {
-            const newObj = { ...obj }
+        state.products = data.map((obj) => {
+            const newObj = { ...obj };
 
-            if(localProducts.favorites) {
-                const addedProduct = localProducts.favorites.find(localObj => localObj.id === obj.id);
+            if (localProducts.favorites) {
+                const addedProduct = localProducts.favorites.find(
+                    (localObj) => localObj.id === obj.id,
+                );
 
-                if(addedProduct) {
+                if (addedProduct) {
                     newObj.isFavorite = addedProduct.isFavorite;
                 }
             }
 
-            if(localProducts.cart) {
-                const addedProduct = localProducts.cart.find(localObj => localObj.id === obj.id);
+            if (localProducts.cart) {
+                const addedProduct = localProducts.cart.find(
+                    (localObj) => localObj.id === obj.id,
+                );
 
-                if(addedProduct) {
+                if (addedProduct) {
                     newObj.inCart = addedProduct.inCart;
                 }
             }
@@ -70,23 +83,26 @@ async function fetchProducts() {
         });
     } catch (error) {
         console.error('Error fetching data', error);
-        toast.error('Не удалось получить данные')
+        toast.error('Не удалось получить данные');
     } finally {
         state.isLoading = false;
     }
 }
-async function addToFavorites(product) {
-    if(!product.isFavorite) {
+function addToFavorites(product) {
+    if (!product.isFavorite) {
         product.isFavorite = true;
         localProducts.favorites.push(product);
     } else {
         product.isFavorite = false;
-        localProducts.favorites.splice(localProducts.favorites.indexOf(product), 1);
+        localProducts.favorites.splice(
+            localProducts.favorites.indexOf(product),
+            1,
+        );
     }
     localStorage.setItem('favorites', JSON.stringify(localProducts.favorites));
 }
-async function addToCart(product) {
-    if(!product.inCart) {
+function addToCart(product) {
+    if (!product.inCart) {
         product.inCart = true;
         localProducts.cart.push(product);
     } else {
@@ -110,24 +126,27 @@ function createOrder() {
     orderState.totalPrice = totalPrice.value;
 
     toast.info('Оформлаем ваш заказ...');
-    
+
     const order = {
         id: localProducts.orders.length,
         products: orderState.products,
-        totalPrice: orderState.totalPrice
-    }
-    
+        totalPrice: orderState.totalPrice,
+    };
+
     setTimeout(async () => {
         try {
             localProducts.cart = [];
-            
+
             await fetchProducts();
-            
+
             orderState.orderId = order.id;
             localProducts.orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(localProducts.orders));
+            localStorage.setItem(
+                'orders',
+                JSON.stringify(localProducts.orders),
+            );
             localStorage.removeItem('cart');
-            
+
             toast.success('Заказ был успешно создан');
         } catch (error) {
             console.error(error);
@@ -153,7 +172,7 @@ provide('drawer', {
     taxPct,
     totalPrice,
     createOrder,
-    orderState
+    orderState,
 });
 </script>
 
@@ -163,7 +182,10 @@ provide('drawer', {
             <Drawer v-if="isDrawerOpen" />
             <Navbar @open-drawer="openDrawer" />
             <main class="relative z-0 px-10 sm:px-[60px]">
-                <RouterView :state="state" :filters="filters" />
+                <RouterView
+                    :state="state"
+                    :filters="filters"
+                />
             </main>
         </div>
     </div>

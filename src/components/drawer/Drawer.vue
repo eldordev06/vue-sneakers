@@ -1,9 +1,9 @@
 <script setup>
-import { inject } from "vue";
+import { inject } from 'vue';
 import Basket from '@/components/basket/Basket.vue';
 import DrawerFoot from '@/components/drawer/DrawerFoot.vue';
 import DrawerHead from '@/components/drawer/DrawerHead.vue';
-import InfoBlock from "../InfoBlock.vue";
+import InfoBlock from '../InfoBlock.vue';
 
 const { closeDrawer, totalPrice, orderState } = inject('drawer');
 
@@ -30,27 +30,32 @@ function closeAnimate() {
             <DrawerHead @close-animate="closeAnimate" />
             <Basket />
             <DrawerFoot v-if="totalPrice" />
-            
-            <div v-else class="flex-grow flex">
-                <InfoBlock v-if="!orderState.orderId"
-                        image-url="/icons/package-icon.png"
-                        image-descr="Empty open box."
-                        image-width="120"
-                        image-height="120"
-                        title="Корзина пустая"
-                        descr="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
-                        @close-animate="closeAnimate"
-                    />
-                <InfoBlock v-else
-                        image-url="/icons/order-success-icon.png"
-                        image-descr="Paper with a checkmark."
-                        image-width="83"
-                        image-height="120"
-                        title="Заказ оформлен!"
-                        title-color="text-lime-500"
-                        :descr="`Ваш заказ #${orderState.orderId} скоро будет передан курьерской доставке`"
-                        @close-animate="closeAnimate"
-                    />
+
+            <div
+                v-else
+                class="flex-grow flex"
+            >
+                <InfoBlock
+                    v-if="!orderState.orderId"
+                    image-url="/icons/package-icon.png"
+                    image-descr="Empty open box."
+                    image-width="120"
+                    image-height="120"
+                    title="Корзина пустая"
+                    descr="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+                    @close-animate="closeAnimate"
+                />
+                <InfoBlock
+                    v-else
+                    image-url="/icons/order-success-icon.png"
+                    image-descr="Paper with a checkmark."
+                    image-width="83"
+                    image-height="120"
+                    title="Заказ оформлен!"
+                    title-color="text-lime-500"
+                    :descr="`Ваш заказ #${orderState.orderId} скоро будет передан курьерской доставке`"
+                    @close-animate="closeAnimate"
+                />
             </div>
         </div>
     </div>
