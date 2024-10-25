@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, toRef } from 'vue';
+import { computed, reactive } from 'vue';
 import { Icon } from '@iconify/vue';
 import CardList from '@/components/card/CardList.vue';
 import InfoBlock from '@/components/InfoBlock.vue';
@@ -7,7 +7,7 @@ import InfoBlock from '@/components/InfoBlock.vue';
 const { state } = defineProps({ state: Object, filters: Object });
 
 const favState = reactive({
-    isLoading: toRef(state, 'isLoading'),
+    isLoading: computed(() => state.isLoading),
     products: computed(() => state.products.filter((obj) => obj.isFavorite)),
 });
 </script>
