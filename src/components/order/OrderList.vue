@@ -8,7 +8,10 @@ const deleteOrder = inject('deleteOrder');
 </script>
 
 <template>
-    <div class="pb-5">
+    <div
+        class="pb-5"
+        v-auto-animate
+    >
         <div
             :class="`${isLastOrder ? '' : 'border-b-8 border-double border-gray-600'} py-8 md:py-10`"
         >

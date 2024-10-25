@@ -7,7 +7,10 @@ const orders = inject('orders');
 </script>
 
 <template>
-    <div v-if="orders.length">
+    <div
+        v-if="orders.length"
+        v-auto-animate
+    >
         <h1 class="pt-5 text-3xl font-bold text-center md:text-start">
             Мои заказы
         </h1>
